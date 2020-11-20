@@ -3,7 +3,7 @@ wasm-client-query-ask-demo
 
 # Demo
 
-* Coming soon
+* https://ipfs.io/ipfs/QmbsMbojwFWCVvEoc8e3boxuqrWx3aUwerc7BRog3eCcfU/
 
 # Dependencies
 
