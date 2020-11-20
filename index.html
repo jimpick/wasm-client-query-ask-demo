@@ -19,6 +19,15 @@
     </p>
     <details style="margin-bottom: 1rem">
       <p>
+        Connects to a configured Lotus JSON-RPC endpoint via WebSockets
+        to perform a Filecoin.StateMinerInfo JSON-RPC call. The p2pd
+        portion of the demo depends on a go-libp2p-daemon p2pd service
+        that has been deployed publicly.
+      </p>
+      <p>Note: The URLs are baked into the demo and there is no error handling,
+        so the demo will fail if the services are offline or unreachable.
+      </p>
+      <p>
         Signature verification and DHT lookups are currently disabled.
       </p>
       <ul>
