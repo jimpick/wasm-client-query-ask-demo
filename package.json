@@ -1,0 +1,24 @@
+{
+  "name": "wasm-client-query-ask-demo",
+  "version": "1.0.0",
+  "description": "Deployable demo for Lotus WASM bundle",
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
+  "scripts": {
+    "start": "parcel watch index.js",
+    "copy": "mkdir -p dist; cp -a index.html go-wasm dist"
+  },
+  "keywords": [],
+  "author": "Jim Pick (@jimpick)",
+  "license": "MIT/Apache-2 (Permissive License Stack)",
+  "dependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "@filecoin-shipyard/lotus-client-rpc": "^0.0.14",
+    "@filecoin-shipyard/lotus-client-schema": "^2.0.0",
+    "pako": "^1.0.11"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.1"
+  }
+}

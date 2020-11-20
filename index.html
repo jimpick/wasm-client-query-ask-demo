@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lotus ClientQueryAsk WASM Demo</title>
+    <script src="go-wasm/wasm_exec.js"></script>
+  </head>
+
+  <body>
+    <h1>Lotus WASM Query Ask Demo</h1>
+    <div id="status">Starting libp2p... (slow, big WASM file loading)</div>
+
+    <p>
+      This web page demonstrates a small portion of Lotus compiled to
+      WebAssembly. Click on the buttons below to query "Ask" information from
+      live miners on mainnet.
+    </p>
+    <details style="margin-bottom: 1rem">
+      <p>
+        Signature verification and DHT lookups are currently disabled.
+      </p>
+      <ul>
+        <li>
+          Demo source:
+          <a href="https://github.com/jimpick/wasm-client-query-ask-demo"
+            >jimpick/wasm-client-query-ask-demo</a
+          >
+        </li>
+        <li>
+          WASM bundle source:
+          <a href="https://github.com/jimpick/libp2p-caddy/tree/p2pclient-demo/go-wasm"
+            >jimpick/libp2p-caddy</a
+          > (branch: p2pclient-demo)
+        </li>
+        <li>
+          Dependencies:
+          <a href="https://github.com/filecoin-shipyard/lotus-wasm-experiments"
+            >filecoin-shipyard/lotus-wasm-experiments</a
+          >
+        </li>
+      </ul>
+    </details>
+    <!-- <button id="goHelloBtn" disabled>Hello</button> -->
+
+    <div style="display: flex">
+      <button id="queryAskBtn" disabled>
+        Query Ask f063655 directly over SSL + Websockets
+      </button>
+      <button id="queryAskTcpBtn" disabled>
+        Query Ask f02620 indirectly via p2pd gateway
+      </button>
+    </div>
+    <pre id="output"></pre>
+    <script src="./index.js"></script>
+  </body>
+</html>
