@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lotus ClientQueryAsk WASM Demo</title>
     <script src="go-wasm/wasm_exec.js"></script>
+    <style type="text/css">
+      button {
+        -webkit-appearance: none;
+        padding: 0.5rem;
+      }
+    </style>
   </head>
 
   <body>
@@ -19,12 +25,13 @@
     </p>
     <details style="margin-bottom: 1rem">
       <p>
-        Connects to a configured Lotus JSON-RPC endpoint via WebSockets
-        to perform a Filecoin.StateMinerInfo JSON-RPC call. The p2pd
-        portion of the demo depends on a go-libp2p-daemon p2pd service
-        that has been deployed publicly.
+        Connects to a configured Lotus JSON-RPC endpoint via WebSockets to
+        perform a Filecoin.StateMinerInfo JSON-RPC call. The p2pd portion of the
+        demo depends on a go-libp2p-daemon p2pd service that has been deployed
+        publicly.
       </p>
-      <p>Note: The URLs are baked into the demo and there is no error handling,
+      <p>
+        Note: The URLs are baked into the demo and there is no error handling,
         so the demo will fail if the services are offline or unreachable.
       </p>
       <p>
@@ -39,9 +46,11 @@
         </li>
         <li>
           WASM bundle source:
-          <a href="https://github.com/jimpick/libp2p-caddy/tree/p2pclient-demo/go-wasm"
+          <a
+            href="https://github.com/jimpick/libp2p-caddy/tree/p2pclient-demo/go-wasm"
             >jimpick/libp2p-caddy</a
-          > (branch: p2pclient-demo)
+          >
+          (branch: p2pclient-demo)
         </li>
         <li>
           Dependencies:
@@ -53,7 +62,7 @@
     </details>
     <!-- <button id="goHelloBtn" disabled>Hello</button> -->
 
-    <div style="display: flex">
+    <div style="display: flex; ">
       <button id="queryAskBtn" disabled>
         Query Ask f063655 directly over SSL + Websockets
       </button>
