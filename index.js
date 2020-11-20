@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   status.textContent = `Instantiating WASM... (uncompressed size: ${size} bytes)`
   const result = await WebAssembly.instantiate(wasm, go.importObject)
   go.run(result.instance)
-  await delay(100)
+  await delay(1000)
   status.innerText = 'All systems good! JS and Go loaded.'
 
   const schema = {
