@@ -1,8 +1,33 @@
 import pako from 'pako'
+import delay from 'delay'
 import { BrowserProvider } from './browser-provider'
 import { LotusRPC } from '@filecoin-shipyard/lotus-client-rpc'
 import { mainnet } from '@filecoin-shipyard/lotus-client-schema'
 import { WasmProvider } from './wasm-provider'
+
+async function download (url, defaultLength, status) {
+  // https://dev.to/samthor/progress-indicator-with-fetch-1loo
+  const response = await fetch(url)
+  let length = response.headers.get('Content-Length')
+  if (!length) {
+    length = defaultLength
+    // something was wrong with response, just give up
+    // return await response.arrayBuffer()
+  }
+  const array = new Uint8Array(length)
+  let at = 0 // to index into the array
+  const reader = response.body.getReader()
+  for (;;) {
+    const { done, value } = await reader.read()
+    if (done) {
+      break
+    }
+    status.textContent = `Fetching WASM bundle... ${at} of ${length} bytes`
+    array.set(value, at)
+    at += value.length
+  }
+  return array
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   // UI elements
@@ -16,21 +41,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     output.textContent += `${txt.trim()}\n`
   }
 
-  status.innerText = 'Loading Go WASM bundle...'
+  // status.innerText = 'Loading Go WASM bundle...'
 
   // Use gzip: https://dstoiko.github.io/posts/go-pong-wasm/
 
   const go = new Go()
   const url = 'go-wasm/main.wasm.gz' // the gzip-compressed wasm file
-  let wasm = pako.ungzip(await (await fetch(url)).arrayBuffer())
-  // A fetched response might be decompressed twice on Firefox.
-  // See https://bugzilla.mozilla.org/show_bug.cgi?id=610679
-  if (wasm[0] === 0x1f && wasm[1] === 0x8b) {
-    wasm = pako.ungzip(wasm)
-  }
+
+  const compressed = await download(url, 7707428, status)
+  status.textContent = `Uncompressing WASM... (compressed size: ${compressed.byteLength} bytes)`
+  await delay(100)
+  const wasm = pako.ungzip(compressed)
+  const size = +wasm.buffer.byteLength
+
+  status.textContent = `Instantiating WASM... (uncompressed size: ${size} bytes)`
   const result = await WebAssembly.instantiate(wasm, go.importObject)
   go.run(result.instance)
-  await new Promise(resolve => window.setTimeout(resolve, 1000))
+  await delay(100)
   status.innerText = 'All systems good! JS and Go loaded.'
 
   const schema = {
@@ -66,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     waitForResult()
     // return 'abcde'
   }
- 
+
   const wasmQueryAskServiceProvider = new WasmProvider(
     window.connectQueryAskService,
     {
@@ -99,5 +126,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     )
     log(`Query Ask TCP: ${JSON.stringify(result, null, 2)}`)
   }
-
 })
